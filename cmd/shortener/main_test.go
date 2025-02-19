@@ -52,6 +52,7 @@ func TestGetHandler(t *testing.T) {
 				PostHandler(w, req)
 
 				resp := w.Result()
+				defer resp.Body.Close()
 				body, _ := io.ReadAll(resp.Body)
 
 				req = httptest.NewRequest(http.MethodGet, string(body), nil)
@@ -120,6 +121,7 @@ func TestPostHandler(t *testing.T) {
 			PostHandler(w, req)
 
 			resp := w.Result()
+			defer resp.Body.Close()
 			body, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, tt.expectedStatus, resp.StatusCode)
